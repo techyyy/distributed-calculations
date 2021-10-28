@@ -1,17 +1,17 @@
 package main
 
 import (
-"fmt"
-"math/rand"
-"os"
-"sync"
-"time"
+	"fmt"
+	"math/rand"
+	"os"
+	"sync"
+	"time"
 )
 
 var random = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 const (
-	ActionsAllowedPerThread = 20
+	ActionsCount = 20
 )
 
 func boolToString(b bool) string {
@@ -22,7 +22,7 @@ func boolToString(b bool) string {
 }
 
 func gardener(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
-	for i := 0; i < ActionsAllowedPerThread; i++ {
+	for i := 0; i < ActionsCount; i++ {
 		rwMutex.Lock()
 		for i := 0; i < len(garden); i++ {
 			for j := 0; j < len(garden[0]); j++ {
@@ -38,7 +38,7 @@ func gardener(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
 }
 
 func nature(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
-	for i := 0; i < ActionsAllowedPerThread; i++ {
+	for i := 0; i < ActionsCount; i++ {
 		rwMutex.Lock()
 		for i := 0; i < len(garden)*2; i++ {
 			index1 := random.Intn(len(garden))
@@ -51,7 +51,7 @@ func nature(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
 	exit <- 1
 }
 
-func monitor1(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
+func firstMonitor(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
 	file, err := os.Create("garden.txt")
 
 	if err != nil {
@@ -66,7 +66,7 @@ func monitor1(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
 		}
 	}(file)
 
-	for i := 0; i < ActionsAllowedPerThread; i++ {
+	for i := 0; i < ActionsCount; i++ {
 		rwMutex.RLock()
 		for i := 0; i < len(garden); i++ {
 			var line string
@@ -82,8 +82,8 @@ func monitor1(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
 	exit <- 1
 }
 
-func monitor2(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
-	for i := 0; i < ActionsAllowedPerThread; i++ {
+func secondMonitor(garden [][]bool, rwMutex *sync.RWMutex, exit chan int) {
+	for i := 0; i < ActionsCount; i++ {
 		rwMutex.RLock()
 		for i := 0; i < len(garden); i++ {
 			var line string
@@ -114,8 +114,8 @@ func main() {
 		garden = append(garden, row)
 	}
 
-	go monitor2(garden, &rwMutex, exit)
-	go monitor1(garden, &rwMutex, exit)
+	go secondMonitor(garden, &rwMutex, exit)
+	go firstMonitor(garden, &rwMutex, exit)
 	go nature(garden, &rwMutex, exit)
 	go gardener(garden, &rwMutex, exit)
 

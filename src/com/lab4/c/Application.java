@@ -7,7 +7,7 @@ public class Application {
     private static final String SITE_A = "A";
     private static final String SITE_B = "B";
     private static final String SITE_C = "C";
-    private static final String SITE_D = "d";
+    private static final String SITE_D = "D";
 
     public static void main(String... args) throws InterruptedException {
 
@@ -25,8 +25,7 @@ public class Application {
         transportManager.addFlight(SITE_A, SITE_C, 40);
 
         transportManager.changeFlightPrice(SITE_A, SITE_C, 50);
-        System.out.println("Flight price " + SITE_C + " - " + SITE_D + " is " +
-                transportManager.getFlightPrice(SITE_C, SITE_D));
+        System.out.println("Flight price " + SITE_C + " - " + SITE_D + " is " + transportManager.getFlightPrice(SITE_C, SITE_D));
         transportManager.deleteFlight(SITE_C, SITE_A);
         transportManager.deleteBusStop(SITE_B);
     }

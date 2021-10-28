@@ -26,7 +26,7 @@ public class Barrier {
 
         try {
             if(finishedThreads== threadsCount)
-                this.overcomeBarrier();
+                this.trip();
             else {
                 this.wait();
             }
@@ -35,7 +35,7 @@ public class Barrier {
         }
     }
 
-    private synchronized void overcomeBarrier(){
+    private synchronized void trip(){
         if(commonRunnable != null) {
             Thread th = new Thread(commonRunnable);
             th.start();

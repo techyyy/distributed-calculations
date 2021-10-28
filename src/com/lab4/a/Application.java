@@ -16,15 +16,20 @@ public class Application {
         Writer writer = new Writer(FILE_NAME, lock);
 
         try {
-            System.out.println("Added: " +
-                    writer.changeFile(WriterInstruction.ADD, "Name" + RANDOM.nextInt(100),
-                            "11" + (RANDOM.nextInt(8999) + 1000)));
-            System.out.println("Name with number " + NUMBER_TO_SEARCH + ": " +
-                    reader.performSearch(ReaderInstruction.FIND_NAME_BY_NUMBER, NUMBER_TO_SEARCH));
-            System.out.println("Number of " + NAME_TO_SEARCH + ": " +
-                    reader.performSearch(ReaderInstruction.FIND_NUMBER_BY_NAME, NAME_TO_SEARCH));
+            System.out.println("Added: "
+                    + writer.changeFile(WriterInstruction.ADD, "Name"
+                    + RANDOM.nextInt(100), "11"
+                    + (RANDOM.nextInt(8999) + 1000)));
+            System.out.println("Name with number "
+                    + NUMBER_TO_SEARCH
+                    + ": "
+                    + reader.performSearch(ReaderInstruction.FIND_NAME_BY_NUMBER, NUMBER_TO_SEARCH));
+            System.out.println("Number of "
+                    + NAME_TO_SEARCH
+                    + ": "
+                    + reader.performSearch(ReaderInstruction.FIND_NUMBER_BY_NAME, NAME_TO_SEARCH));
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.err.println("Interrupted");;
         }
     }
 }

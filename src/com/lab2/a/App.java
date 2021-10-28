@@ -34,8 +34,6 @@ public class App {
         for (int[] lane : FOREST) {
             executorService.execute(new BeeGroup(lane));
         }
-//        String s = "2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/";
-//        System.out.println(s.length());
     }
 
 }
