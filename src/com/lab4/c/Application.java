@@ -25,7 +25,12 @@ public class Application {
         transportManager.addFlight(SITE_A, SITE_C, 40);
 
         transportManager.changeFlightPrice(SITE_A, SITE_C, 50);
-        System.out.println("Flight price " + SITE_C + " - " + SITE_D + " is " + transportManager.getFlightPrice(SITE_C, SITE_D));
+        System.out.println("Flight price for "
+                + SITE_C
+                + " - "
+                + SITE_D
+                + " is "
+                + transportManager.getFlightPrice(SITE_C, SITE_D));
         transportManager.deleteFlight(SITE_C, SITE_A);
         transportManager.deleteBusStop(SITE_B);
     }
